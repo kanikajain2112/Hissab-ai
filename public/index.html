@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hisaab-AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f7f9fc; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 999px; }
+  </style>
+</head>
+<body class="text-slate-800">
+
+  <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="bg-[#a2d2ff] p-2 rounded-xl">
+          <i class="fa-solid fa-brain text-white"></i>
+        </div>
+        <span class="text-2xl font-extrabold tracking-tight text-slate-900">
+          Hisaab<span class="text-[#a2d2ff]">AI</span>
+        </span>
+      </div>
+
+      <div class="hidden md:flex gap-8 font-semibold text-slate-500">
+        <a href="#dashboard-section" class="text-[#a2d2ff]">Dashboard</a>
+        <a href="#chat-section" class="hover:text-[#a2d2ff] transition-colors">Chat</a>
+        <a href="#time-machine-section" class="hover:text-[#a2d2ff] transition-colors">Time Machine</a>
+        <a href="#security-section" class="hover:text-[#a2d2ff] transition-colors">Security</a>
+      </div>
+
+      <button class="bg-slate-400 text-white px-6 py-2.5 rounded-full font-bold cursor-not-allowed" title="Coming soon in Android app">
+        Connect SMS
+      </button>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-6 py-10">
+
+    <div id="dashboard-section" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-[#fadbd8] p-8 rounded-[2rem] shadow-sm">
+        <h3 class="text-lg font-bold text-slate-700 uppercase tracking-widest">Broke Date Prediction</h3>
+        <div class="mt-4">
+          <span id="broke-date" class="text-5xl font-black text-slate-900">--</span>
+          <p id="warning-text" class="mt-2 text-slate-600 font-medium italic">Loading...</p>
+        </div>
+      </div>
+
+      <div class="bg-[#d5f5e3] p-8 rounded-[2rem] shadow-sm">
+        <h3 class="text-lg font-bold text-slate-700 uppercase tracking-widest">Needs vs Wants</h3>
+        <div class="mt-4 flex gap-4 items-end">
+          <div class="w-full bg-black/5 h-20 rounded-xl relative">
+            <div id="needs-bar" class="absolute bottom-0 w-full bg-[#27ae60] rounded-xl h-[60%] flex items-center justify-center text-xs font-bold text-white">0%</div>
+          </div>
+          <div class="w-full bg-black/5 h-20 rounded-xl relative">
+            <div id="wants-bar" class="absolute bottom-0 w-full bg-[#e67e22] rounded-xl h-[40%] flex items-center justify-center text-xs font-bold text-white">0%</div>
+          </div>
+        </div>
+        <p id="impulse-text" class="mt-4 font-bold text-slate-700 text-center">Loading...</p>
+      </div>
+
+      <div class="bg-[#a2d2ff]/20 p-8 rounded-[2rem] border-2 border-dashed border-[#a2d2ff] text-center">
+        <i class="fa-solid fa-circle-exclamation text-4xl text-[#a2d2ff] mb-4 animate-pulse"></i>
+        <h3 class="text-xl font-bold">Anomaly Detected!</h3>
+        <p id="anomaly-text" class="text-sm text-slate-600 px-4">Analyzing recent expenses...</p>
+      </div>
+    </div>
+
+    <section class="mb-10 bg-white rounded-[2rem] shadow-xl border border-slate-100 p-8">
+      <h3 class="text-2xl font-bold mb-6">Add Expense</h3>
+      <form id="expense-form" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <input id="amount" type="number" step="0.01" placeholder="Amount" class="bg-slate-50 rounded-xl px-4 py-3 outline-none border border-slate-200">
+        <select id="category" class="bg-slate-50 rounded-xl px-4 py-3 outline-none border border-slate-200">
+          <option value="Food">Food</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Travel">Travel</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Health">Health</option>
+        </select>
+        <input id="note" type="text" placeholder="Note" class="bg-slate-50 rounded-xl px-4 py-3 outline-none border border-slate-200">
+        <button type="submit" class="bg-slate-900 text-white rounded-xl px-6 py-3 font-bold">Save Expense</button>
+      </form>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+      <div id="chat-section" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 flex flex-col h-[550px]">
+        <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+            <h3 class="font-bold text-lg">Reality Check AI</h3>
+          </div>
+          <span class="text-xs font-bold text-slate-400">PERSONALITY: FRANK + STRICT</span>
+        </div>
+
+        <div id="chat-container" class="flex-grow overflow-y-auto p-6 space-y-4 custom-scrollbar">
+          <div class="flex justify-start">
+            <div class="max-w-[85%] p-4 rounded-2xl font-medium bg-[#f0f2f5] text-slate-800 rounded-tl-none border border-slate-200">
+              Main frankly bolunga — spend karne se pehle mujhse pooch lo. Agar kharcha unnecessary hua, to main mana bhi karunga.
+            </div>
+          </div>
+        </div>
+
+        <form id="chat-form" class="p-6 border-t border-slate-100 flex gap-2">
+          <input type="text" id="chat-input" placeholder="Ask me before you spend..." class="flex-grow bg-slate-50 border-none rounded-full px-6 py-4 focus:ring-2 focus:ring-[#a2d2ff] outline-none">
+          <button type="submit" class="bg-[#a2d2ff] w-14 h-14 rounded-full text-white flex items-center justify-center hover:scale-105 transition-transform">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </form>
+      </div>
+
+      <div id="time-machine-section" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex flex-col">
+        <div class="flex items-center justify-between mb-8">
+          <h3 class="font-bold text-xl flex items-center gap-2">
+            <i class="fa-solid fa-clock text-[#a2d2ff]"></i> Predictive Time Machine
+          </h3>
+          <span class="bg-[#f9e79f] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider text-slate-700">Prediction Active</span>
+        </div>
+
+        <div class="flex-grow flex items-end justify-between gap-2 relative h-64 px-2">
+          <div class="absolute inset-0 flex flex-col justify-between py-2 pointer-events-none">
+            <div class="border-t border-slate-100 w-full"></div>
+            <div class="border-t border-slate-100 w-full"></div>
+            <div class="border-t border-slate-100 w-full"></div>
+            <div class="border-t border-slate-100 w-full"></div>
+          </div>
+
+          <div id="bar1" class="flex-grow bg-[#a2d2ff] rounded-t-lg h-[90%]"></div>
+          <div id="bar2" class="flex-grow bg-[#a2d2ff] rounded-t-lg h-[82%]"></div>
+          <div id="bar3" class="flex-grow bg-[#a2d2ff] rounded-t-lg h-[75%]"></div>
+          <div id="bar4" class="flex-grow bg-[#a2d2ff] rounded-t-lg h-[68%]"></div>
+          <div id="bar5" class="flex-grow bg-[#a2d2ff] rounded-t-lg h-[50%]"></div>
+          <div id="bar6" class="flex-grow bg-[#a2d2ff] rounded-t-lg h-[45%]"></div>
+          <div id="bar7" class="flex-grow bg-[#a2d2ff] rounded-t-lg h-[30%]"></div>
+          <div id="bar8" class="flex-grow bg-[#a2d2ff] rounded-t-lg h-[25%]"></div>
+          <div id="bar9" class="flex-grow bg-red-300 rounded-t-lg h-[15%]"></div>
+          <div id="bar10" class="flex-grow bg-red-400 rounded-t-lg h-[5%]"></div>
+        </div>
+
+        <div class="flex justify-between mt-4 px-2 text-[10px] font-bold text-slate-400">
+          <span>WEEK 1</span>
+          <span>WEEK 2</span>
+          <span>WEEK 3</span>
+          <span>WEEK 4</span>
+        </div>
+
+        <div class="mt-10 p-5 bg-slate-50 rounded-2xl border border-slate-100">
+          <p class="text-sm font-extrabold text-slate-800">Smart Insight</p>
+          <p id="smart-insight" class="text-xs text-slate-500 leading-relaxed">Loading smart insight...</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="bg-white rounded-[2rem] shadow-xl border border-slate-100 p-8 mb-10">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold">Recent Transactions</h3>
+        <span class="text-sm text-slate-500">Latest 20</span>
+      </div>
+      <div id="transactions-list" class="space-y-3 text-sm text-slate-700">
+        <p class="text-slate-500">Loading transactions...</p>
+      </div>
+    </section>
+
+    <section id="security-section" class="mt-24 py-16 border-t border-slate-200">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-black text-slate-900 tracking-tight">Naya Kya Hai?</h2>
+        <p class="text-slate-500 mt-3 font-medium text-lg">Post-Mortem reports are history. We are Financial Life-Support.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div>
+          <h4 class="font-bold text-xl mb-3">SMS Scraper</h4>
+          <p class="text-sm text-slate-500 leading-relaxed">Coming soon in Android app version.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-xl mb-3">Frank Money Coach</h4>
+          <p class="text-sm text-slate-500 leading-relaxed">Short, direct, human answers to stop unnecessary spending.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-xl mb-3">Time Machine</h4>
+          <p class="text-sm text-slate-500 leading-relaxed">See where your current spending pace is taking you.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-xl mb-3">Privacy First</h4>
+          <p class="text-sm text-slate-500 leading-relaxed">Budget data stays inside your app workflow.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-16 text-center text-slate-400 text-sm font-bold">
+    &copy; 2026 Hisaab-AI Platform
+  </footer>
+
+  <script>
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatContainer = document.getElementById('chat-container');
+    const expenseForm = document.getElementById('expense-form');
+    const amountInput = document.getElementById('amount');
+    const categoryInput = document.getElementById('category');
+    const noteInput = document.getElementById('note');
+
+    async function fetchDashboard() {
+      try {
+        const res = await fetch('/api/dashboard');
+        const data = await res.json();
+
+        const brokeDateEl = document.getElementById('broke-date');
+        const warningTextEl = document.getElementById('warning-text');
+
+        if (data.daysToBroke !== null && data.daysToBroke >= 0) {
+          const d = new Date();
+          d.setDate(d.getDate() + data.daysToBroke);
+          brokeDateEl.textContent = d.toLocaleDateString('en-IN', {
+            day: 'numeric',
+            month: 'long'
+          });
+        } else {
+          brokeDateEl.textContent = 'Safe';
+        }
+
+        warningTextEl.textContent = data.warning;
+
+        const essentialCategories = ['Food', 'Health', 'Travel'];
+        let needs = 0;
+        let wants = 0;
+
+        data.categoryStats.forEach(c => {
+          if (essentialCategories.includes(c.category)) needs += c.spent;
+          else wants += c.spent;
+        });
+
+        const total = needs + wants || 1;
+        const needsPercent = Math.round((needs / total) * 100);
+        const wantsPercent = Math.round((wants / total) * 100);
+
+        document.getElementById('needs-bar').style.height = `${needsPercent}%`;
+        document.getElementById('wants-bar').style.height = `${wantsPercent}%`;
+        document.getElementById('needs-bar').textContent = `${needsPercent}%`;
+        document.getElementById('wants-bar').textContent = `${wantsPercent}%`;
+        document.getElementById('impulse-text').textContent =
+          wantsPercent > 40 ? 'Impulse control needed!' : 'Spending mix looks balanced';
+
+        const highCategory = data.categoryStats.find(c => c.percent >= 80);
+        document.getElementById('anomaly-text').textContent = highCategory
+          ? `₹${highCategory.spent} ${highCategory.category} me spend ho chuke hain. Budget almost khatam hai.`
+          : 'No major anomaly. Spending under control right now.';
+
+        document.getElementById('smart-insight').textContent =
+          `Tum daily approx ₹${data.avgDailySpend} spend kar rahe ho. Is speed se weekly ₹${data.projectedWeeklySpend} aur month-end tak ₹${data.projectedMonthEndSpend} kharch ho sakte hain.`;
+
+        updatePredictionBars(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    function updatePredictionBars(data) {
+      const totalBudget = data.totalBudget || 1;
+      const projected = data.projectedMonthEndSpend || 0;
+      const remainingRatio = Math.max(0, 100 - Math.min(100, Math.round((projected / totalBudget) * 100)));
+      const bars = [90, 82, 75, 68, 55, 45, 35, 25, 15, 5];
+
+      for (let i = 0; i < bars.length; i++) {
+        const bar = document.getElementById(`bar${i + 1}`);
+        let value = bars[i] - Math.floor((100 - remainingRatio) / 8);
+        value = Math.max(5, Math.min(95, value));
+        bar.style.height = `${value}%`;
+      }
+    }
+
+    async function fetchTransactions() {
+      try {
+        const res = await fetch('/api/transactions');
+        const data = await res.json();
+        const list = document.getElementById('transactions-list');
+
+        if (!data.length) {
+          list.innerHTML = '<p class="text-slate-500">No transactions yet.</p>';
+          return;
+        }
+
+        list.innerHTML = data.map(tx => `
+          <div class="flex items-center justify-between bg-slate-50 rounded-xl px-4 py-3 border border-slate-100">
+            <div>
+              <p class="font-semibold">${tx.category}</p>
+              <p class="text-slate-500 text-xs">${tx.note || 'No note'} • ${new Date(tx.created_at).toLocaleString('en-IN')}</p>
+            </div>
+            <div class="font-bold text-slate-900">₹${Number(tx.amount).toFixed(0)}</div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    expenseForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const amount = Number(amountInput.value);
+      const category = categoryInput.value;
+      const note = noteInput.value;
+
+      if (!amount || amount <= 0) return;
+
+      const payload = {
+        amount,
+        category,
+        note,
+        essential: ['Food', 'Health', 'Travel'].includes(category)
+      };
+
+      try {
+        const res = await fetch('/api/transactions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+          amountInput.value = '';
+          noteInput.value = '';
+          addMessage(`Expense saved: ₹${payload.amount} in ${payload.category}`, 'ai');
+          fetchDashboard();
+          fetchTransactions();
+        }
+      } catch (error) {
+        addMessage('Expense save nahi hua. Server check karo.', 'ai');
+      }
+    });
+
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, 'user');
+      chatInput.value = '';
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+
+        const data = await res.json();
+        addMessage(data.reply, 'ai');
+      } catch (err) {
+        addMessage('Backend se response nahi aa raha. Server check karo.', 'ai');
+      }
+    });
+
+    function addMessage(text, role) {
+      const div = document.createElement('div');
+      div.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'}`;
+
+      const bubble = document.createElement('div');
+      bubble.className = `max-w-[85%] p-4 rounded-2xl font-medium ${
+        role === 'user'
+          ? 'bg-slate-900 text-white rounded-tr-none shadow-lg'
+          : 'bg-[#f0f2f5] text-slate-800 rounded-tl-none border border-slate-200'
+      }`;
+      bubble.textContent = text;
+
+      div.appendChild(bubble);
+      chatContainer.appendChild(div);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    fetchDashboard();
+    fetchTransactions();
+  </script>
+</body>
+</html>
