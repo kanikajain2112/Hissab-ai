@@ -1,0 +1,16 @@
+{
+  "name": "hisaab-ai",
+  "version": "1.0.0",
+  "description": "Expense prediction app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.0",
+    "@capacitor/cli": "^7.4.0",
+    "@capacitor/core": "^7.4.0",
+    "express": "^4.19.2",
+    "sqlite3": "^6.0.1"
+  }
+}
